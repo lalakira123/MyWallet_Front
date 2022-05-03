@@ -1,11 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 function Login() {
+    const navigate = useNavigate();
+
+    function logar(e){
+        e.preventDefault();
+        navigate('/transacoes');
+    }
+
     return (
         <Container>
             <Titulo>MyWallet</Titulo>
-            <Form>
+            <Form onSubmit={logar}>
                 <Input placeholder="E-mail" />
                 <Input placeholder="Senha" />
                 <Button> Entrar </Button>
