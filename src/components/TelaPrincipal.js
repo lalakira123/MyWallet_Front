@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Saida from './../assets/img/saida.png';
@@ -20,7 +20,9 @@ function TelaPrincipal() {
         <Container>
             <Header>
                 <h2>Olá, Fulano</h2>
-                <img src={Saida} alt='sair'/>
+                <Link to='/'>
+                    <img src={Saida} alt='sair'/>
+                </Link>
             </Header>
             <Main>
                 <p>Não há registros de entrada ou saída</p>
@@ -72,7 +74,7 @@ const Section = styled.section`
 const Botao = styled.div`
     background-color: #A328D6;
     width: 155px;
-    height: 114px;
+    height: 110px;
     border-radius: 5px;
     padding: 10px;
     font-size: 17px;
@@ -81,7 +83,7 @@ const Botao = styled.div`
 `
 
 const Imagem = styled.img`
-    margin-bottom: 30px;
+    margin-bottom: 27px;
 `
 
 const Texto = styled.p`
