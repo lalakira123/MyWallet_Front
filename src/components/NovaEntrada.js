@@ -27,6 +27,8 @@ export default NovaEntrada;
 
 const Container = styled.div`
     padding: 25px;
+    display: flex;
+    flex-direction: column;
 `
 
 const Header = styled.header`
