@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -5,7 +6,10 @@ import Saida from './../assets/img/saida.png';
 import Adicionar from './../assets/img/adicionar.png';
 import Subtrair from './../assets/img/subtrair.png';
 
+import UserContext from './../contexts/UserContext';
+
 function TelaPrincipal() {
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
     function adicionarEntrada(){
@@ -19,7 +23,7 @@ function TelaPrincipal() {
     return(
         <Container>
             <Header>
-                <h2>Olá, Fulano</h2>
+                <h2>Olá, {user.name}</h2>
                 <Link to='/'>
                     <img src={Saida} alt='sair'/>
                 </Link>
