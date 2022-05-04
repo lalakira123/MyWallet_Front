@@ -1,6 +1,7 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import Saida from './../assets/img/saida.png';
 import Adicionar from './../assets/img/adicionar.png';
@@ -12,13 +13,17 @@ function TelaPrincipal() {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
-    function adicionarEntrada(){
-        navigate('/entrada');
-    }
-
-    function adicionarSaida(){
-        navigate('/saida')
-    }
+    useEffect(() => {
+        const promise = axios.get('https://localhost:5000/...');
+        promise.then((resposta) => {
+            const { data } = resposta;
+            //Lista para mandar para o quadro branco em forma de lista 
+        });
+        promise.catch((e) => {
+            console.log('Não foi possível pegar as transacoes');
+            console.log(e);
+        }); 
+    },[{/*ESCOLHER AQUI OS ESTADOS QUE IRAO ATUALIZAR O useEffect*/}]);
 
     return(
         <Container>
@@ -30,14 +35,15 @@ function TelaPrincipal() {
             </Header>
             <Main>
                 <p>Não há registros de entrada ou saída</p>
+                {/*Colocar aqui a lista de transacoes*/}
             </Main>
             <Section>
-                <Botao onClick={adicionarEntrada}>
+                <Botao onClick={() => navigate('/entrada')}>
                     <Imagem src={Adicionar} alt='adicionar'/>
                     <Texto>Nova</Texto>
                     <p>entrada</p>
                 </Botao>
-                <Botao onClick={adicionarSaida}>
+                <Botao onClick={() => navigate('/saida')}>
                     <Imagem src={Subtrair} alt='subtrair'/>
                     <Texto>Nova</Texto>
                     <p>saída</p>

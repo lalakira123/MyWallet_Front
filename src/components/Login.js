@@ -25,8 +25,6 @@ function Login() {
         });
     }
 
-    console.log(login);
-
     return (
         <Container>
             <Titulo>MyWallet</Titulo>

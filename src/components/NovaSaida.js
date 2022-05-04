@@ -1,12 +1,25 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 function NovaSaida() {
+    const [novaSaida, setNovaSaida] = useState({movimento:"", descricao:""})
     const navigate = useNavigate();
 
     function adicionarNovaSaida(e) {
         e.preventDefault();
-        navigate('/transacoes');
+        const promise = axios.post('https://localhost:5000',{
+            ...novaSaida,
+            isPlus: false
+        })
+        promise.then(() => {
+            navigate('/transacoes');
+        })
+        promise.catch((e) => {
+            console.log('Não foi possível adicionar transacao');
+            console.log(e);
+        })
     }
 
     return(
@@ -15,8 +28,20 @@ function NovaSaida() {
                 <h2>Nova saída</h2>
             </Header>
             <Form onSubmit={adicionarNovaSaida}>
-                <Input placeholder="Valor" />
-                <Input placeholder="Descrição" />
+                <Input 
+                    placeholder="Valor"
+                    onChange={(e) => setNovaSaida({...novaSaida, movimento: e.target.value})}
+                    value={novaSaida.movimento}
+                    type='number'
+                    required 
+                />
+                <Input 
+                    placeholder="Descrição"
+                    onChange={(e) => setNovaSaida({...novaSaida, descricao: e.target.value})}
+                    value={novaSaida.descricao}
+                    type='text'
+                    required 
+                />
                 <Button> Salvar saída </Button>
             </Form>
         </Container>

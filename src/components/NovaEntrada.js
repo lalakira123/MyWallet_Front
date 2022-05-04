@@ -1,12 +1,25 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 function NovaEntrada() {
+    const [novaEntrada, setNovaEntrada] = useState({movimento:"", descricao:""});
+
     const navigate = useNavigate();
 
     function adicionarNovaEntrada(e) {
         e.preventDefault();
-        navigate('/transacoes');
+        const promise = axios.post('http://localhost:5000',{
+            ...novaEntrada,
+            isPlus: true    
+        });
+        promise.then(() => {
+            navigate('/transacoes');
+        });
+        promise.catch((e) => {
+            console.log('Não foi possível enviar os dados');
+            console.log(e);
+        });
     }
 
     return(
@@ -15,8 +28,20 @@ function NovaEntrada() {
                 <h2>Nova entrada</h2>
             </Header>
             <Form onSubmit={adicionarNovaEntrada}>
-                <Input placeholder="Valor" />
-                <Input placeholder="Descrição" />
+                <Input 
+                    placeholder="Valor"
+                    onChange={(e) => setNovaEntrada({...novaEntrada, movimento: e.target.value})}
+                    value={novaEntrada.movimento} 
+                    type='number'
+                    required
+                />
+                <Input 
+                    placeholder="Descrição"
+                    onChange={(e) => setNovaEntrada({...novaEntrada, descricao: e.target.value})}
+                    value={novaEntrada.descricao}
+                    type='text'
+                    required 
+                />
                 <Button> Salvar entrada </Button>
             </Form>
         </Container>
