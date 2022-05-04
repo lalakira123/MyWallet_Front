@@ -1,15 +1,57 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 function Cadastro() {
+    const [cadastro, setCadastro] = useState({name:"", email:"", password:"", confirmationPassword:""});
+
+    const navigate = useNavigate();
+
+    function cadastrar(e){
+        e.preventDefault();
+        const promise = axios.post('https://localhost:5000/sign-up',cadastro);
+        promise.then(() => {
+            navigate('/');
+        });
+        promise.catch((e) => {
+            console.log('Não foi possível cadastrar o usuário');
+            console.log(e);
+        });
+    }
+
     return (
         <Container>
             <Titulo>MyWallet</Titulo>
-            <Form>
-                <Input placeholder="Nome" />
-                <Input placeholder="E-mail" />
-                <Input placeholder="Senha" />
-                <Input placeholder="Confirme a senha" />
+            <Form onSubmit={cadastrar}>
+                <Input 
+                    placeholder="Nome"
+                    onChange={(e) => setCadastro({...cadastro, name: e.target.value})}
+                    value={cadastro.name}
+                    type='text'
+                    required 
+                />
+                <Input 
+                    placeholder="E-mail"
+                    onChange={(e) => setCadastro({...cadastro, email: e.target.value})}
+                    value={cadastro.email}
+                    type='email'
+                    required 
+                />
+                <Input 
+                    placeholder="Senha"
+                    onChange={(e) => setCadastro({...cadastro, password: e.target.value})}
+                    value={cadastro.password}
+                    type='password'
+                    required 
+                />
+                <Input 
+                    placeholder="Confirme a senha"
+                    onChange={(e) => setCadastro({...cadastro, confirmationPassword: e.target.value})} 
+                    value={cadastro.confirmationPassword}
+                    type='password'
+                    required
+                />
                 <Button> Cadastrar </Button>
             </Form>
             <Link to='/'>Já tem uma conta? Entre agora!</Link>

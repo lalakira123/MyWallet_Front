@@ -1,20 +1,50 @@
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
+import UserContext from './../contexts/UserContext';
+ 
 function Login() {
+    const [login, setLogin] = useState({email:"", password:""});
+
     const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
 
     function logar(e){
         e.preventDefault();
-        navigate('/transacoes');
+        const promise = axios.post('https://localhost:5000/sign-in', login);
+        promise.then((resposta) => {
+            const { data } = resposta;
+            setUser(data.name);  
+            navigate('/transacoes');   
+        });
+        promise.catch((e) => {
+            console.log('Não foi possível realizar o login');
+            console.log(e);
+        });
     }
+
+    console.log(login);
 
     return (
         <Container>
             <Titulo>MyWallet</Titulo>
             <Form onSubmit={logar}>
-                <Input placeholder="E-mail" />
-                <Input placeholder="Senha" />
+                <Input 
+                    placeholder="E-mail" 
+                    onChange={(e) => setLogin({...login, email:e.target.value})}
+                    value={login.email}
+                    type='text'
+                    required
+                />
+                <Input 
+                    placeholder="Senha"
+                    onChange={(e) => setLogin({...login, password:e.target.value})}
+                    value={login.password}
+                    type='password'
+                    required 
+                />
                 <Button> Entrar </Button>
             </Form>
             <Link to='/cadastro'>Primeira vez? Cadastra-se!</Link>
