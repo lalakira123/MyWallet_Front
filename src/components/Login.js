@@ -9,14 +9,14 @@ function Login() {
     const [login, setLogin] = useState({email:"", password:""});
 
     const navigate = useNavigate();
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     function logar(e){
         e.preventDefault();
-        const promise = axios.post('https://localhost:5000/sign-in', login);
+        const promise = axios.post('http://localhost:5000/sign-in', login);
         promise.then((resposta) => {
             const { data } = resposta;
-            setUser(data.name);  
+            setUser({...user, token: data});  
             navigate('/transacoes');   
         });
         promise.catch((e) => {

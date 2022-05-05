@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 function NovaEntrada() {
     const [novaEntrada, setNovaEntrada] = useState({movimento:"", descricao:""});

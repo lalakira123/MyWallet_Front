@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -10,20 +10,29 @@ import Subtrair from './../assets/img/subtrair.png';
 import UserContext from './../contexts/UserContext';
 
 function TelaPrincipal() {
-    const { user } = useContext(UserContext);
+    const [ movements, setMovements ] = useState([]);
+
+    const { user, setUser } = useContext(UserContext);
+
     const navigate = useNavigate();
 
+    const config = {
+        headers: { Authorization: `Bearer ${user.token}` }
+    }
+
     useEffect(() => {
-        const promise = axios.get('https://localhost:5000/...');
+        const promise = axios.get('http://localhost:5000/movements', config);
         promise.then((resposta) => {
             const { data } = resposta;
-            //Lista para mandar para o quadro branco em forma de lista 
+            const { name, movements } = data;
+            setUser({...user, name});
+            setMovements(movements);
         });
         promise.catch((e) => {
             console.log('Não foi possível pegar as transacoes');
             console.log(e);
         }); 
-    },[{/*ESCOLHER AQUI OS ESTADOS QUE IRAO ATUALIZAR O useEffect*/}]);
+    },[]);
 
     return(
         <Container>
@@ -34,8 +43,7 @@ function TelaPrincipal() {
                 </Link>
             </Header>
             <Main>
-                <p>Não há registros de entrada ou saída</p>
-                {/*Colocar aqui a lista de transacoes*/}
+                {movements.length === 0 ? <p>Não há registros de entrada ou saída</p> : <></>}
             </Main>
             <Section>
                 <Botao onClick={() => navigate('/entrada')}>

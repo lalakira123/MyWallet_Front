@@ -4,19 +4,20 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 function Cadastro() {
-    const [cadastro, setCadastro] = useState({name:"", email:"", password:"", confirmationPassword:""});
+    const [cadastro, setCadastro] = useState({name:"", email:"", password:"", passwordConfirmation:""});
 
     const navigate = useNavigate();
 
     function cadastrar(e){
         e.preventDefault();
-        const promise = axios.post('https://localhost:5000/sign-up',cadastro);
-        promise.then(() => {
+        const promise = axios.post('http://localhost:5000/sign-up', cadastro);
+        promise.then((response) => {
+            console.log(response.data.status);
             navigate('/');
         });
         promise.catch((e) => {
             console.log('Não foi possível cadastrar o usuário');
-            console.log(e);
+            console.log(e.response.data);
         });
     }
 
@@ -47,8 +48,8 @@ function Cadastro() {
                 />
                 <Input 
                     placeholder="Confirme a senha"
-                    onChange={(e) => setCadastro({...cadastro, confirmationPassword: e.target.value})} 
-                    value={cadastro.confirmationPassword}
+                    onChange={(e) => setCadastro({...cadastro, passwordConfirmation: e.target.value})} 
+                    value={cadastro.passwordConfirmation}
                     type='password'
                     required
                 />
