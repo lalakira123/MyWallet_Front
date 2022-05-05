@@ -1,18 +1,26 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import UserContext from './../contexts/UserContext';
+
 function NovaSaida() {
     const [novaSaida, setNovaSaida] = useState({movimento:"", descricao:""})
+
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
+
+    const config = {
+        headers: { Authorization: `Bearer ${user.token}` }
+    }
 
     function adicionarNovaSaida(e) {
         e.preventDefault();
-        const promise = axios.post('https://localhost:5000',{
+        const promise = axios.post('https://localhost:5000/movements',{
             ...novaSaida,
             isPlus: false
-        })
+        }, config);
         promise.then(() => {
             navigate('/transacoes');
         })

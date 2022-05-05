@@ -1,19 +1,26 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import UserContext from './../contexts/UserContext';
+
 function NovaEntrada() {
-    const [novaEntrada, setNovaEntrada] = useState({movimento:"", descricao:""});
+    const [novaEntrada, setNovaEntrada] = useState({movement:"", description:""});
 
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
+
+    const config = {
+        headers: { Authorization: `Bearer ${user.token}` }
+    };
 
     function adicionarNovaEntrada(e) {
         e.preventDefault();
-        const promise = axios.post('http://localhost:5000',{
+        const promise = axios.post('http://localhost:5000/movements',{
             ...novaEntrada,
             isPlus: true    
-        });
+        }, config);
         promise.then(() => {
             navigate('/transacoes');
         });
@@ -31,15 +38,15 @@ function NovaEntrada() {
             <Form onSubmit={adicionarNovaEntrada}>
                 <Input 
                     placeholder="Valor"
-                    onChange={(e) => setNovaEntrada({...novaEntrada, movimento: e.target.value})}
-                    value={novaEntrada.movimento} 
+                    onChange={(e) => setNovaEntrada({...novaEntrada, movement: e.target.value})}
+                    value={novaEntrada.movement} 
                     type='number'
                     required
                 />
                 <Input 
                     placeholder="Descrição"
-                    onChange={(e) => setNovaEntrada({...novaEntrada, descricao: e.target.value})}
-                    value={novaEntrada.descricao}
+                    onChange={(e) => setNovaEntrada({...novaEntrada, description: e.target.value})}
+                    value={novaEntrada.description}
                     type='text'
                     required 
                 />

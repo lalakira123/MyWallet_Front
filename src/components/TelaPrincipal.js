@@ -20,6 +20,8 @@ function TelaPrincipal() {
         headers: { Authorization: `Bearer ${user.token}` }
     }
 
+    console.log(user.token);
+
     useEffect(() => {
         const promise = axios.get('http://localhost:5000/movements', config);
         promise.then((resposta) => {
