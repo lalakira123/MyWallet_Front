@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import Movimentacoes from './Movimentacoes.js';
+
 import Saida from './../assets/img/saida.png';
 import Adicionar from './../assets/img/adicionar.png';
 import Subtrair from './../assets/img/subtrair.png';
@@ -44,7 +46,11 @@ function TelaPrincipal() {
                 </Link>
             </Header>
             <Main>
-                {movements.length === 0 ? <p>Não há registros de entrada ou saída</p> : <></>}
+                {
+                    movements.length !== 0 ? 
+                    <Movimentacoes movements={movements}/>
+                    : <Mensagem>Não há registros de entrada ou saída</Mensagem>
+                }
             </Main>
             <Section>
                 <Botao onClick={() => navigate('/entrada')}>
@@ -83,6 +89,18 @@ const Main = styled.main`
     margin-bottom: 13px;
     background-color: #FFFFFF;
     border-radius: 5px;
+    position: relative;
+    overflow-y: scroll;
+`
+
+const Mensagem = styled.p`
+    font-size: 20px;
+    font-weight: 400;
+    color: #868686;
+    padding-top: 200px;
+    padding-left: 40px;
+    padding-right: 40px;
+    text-align: center;
 `
 
 const Section = styled.section`
