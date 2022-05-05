@@ -27,14 +27,14 @@ function Movimentacoes(props){
                                 <Data>{date}</Data>
                                 <Descricao>{description}</Descricao>
                             </InfoDescription>
-                            <InfoMovement isPlus={isPlus}>{movement}</InfoMovement>
+                            <InfoMovement isPlus={isPlus}>{parseInt(movement).toFixed(2)}</InfoMovement>
                         </Info>
                     );
                 })}
             </Container>
             <Saldo> 
                 <TextSaldo>SALDO</TextSaldo>
-                <ContSaldo>{saldo}</ContSaldo>
+                <ContSaldo isPositive={ saldo > 0 ? true : false }>{parseInt(saldo).toFixed(2)}</ContSaldo>
             </Saldo>
         </>
     ); 
@@ -95,4 +95,5 @@ const TextSaldo = styled.p`
 const ContSaldo = styled.p`
     font-size: 17px;
     font-weight: 400;
+    color: ${props => props.isPositive ? '#03AC00' : '#C70000'}
 `
