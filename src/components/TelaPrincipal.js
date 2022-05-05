@@ -29,7 +29,6 @@ function TelaPrincipal() {
             const { name, movements } = data;
             setUser({...user, name});
             setMovements(movements);
-            console.log(movements);
         });
         promise.catch((e) => {
             console.log('Não foi possível pegar as transacoes');
@@ -90,7 +89,6 @@ const Main = styled.main`
     background-color: #FFFFFF;
     border-radius: 5px;
     position: relative;
-    overflow-y: scroll;
 `
 
 const Mensagem = styled.p`

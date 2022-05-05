@@ -10,8 +10,8 @@ function Movimentacoes(props){
         let soma = 0;
         movements.forEach((move) => {
             const { movement, isPlus } = move;
-            if(isPlus) soma += parseInt(movement);
-            else soma -= parseInt(movement);
+            if(isPlus) soma += parseFloat(movement);
+            else soma -= parseFloat(movement);
         })
         setSaldo(soma);
     }, [])
@@ -27,14 +27,14 @@ function Movimentacoes(props){
                                 <Data>{date}</Data>
                                 <Descricao>{description}</Descricao>
                             </InfoDescription>
-                            <InfoMovement isPlus={isPlus}>{parseInt(movement).toFixed(2)}</InfoMovement>
+                            <InfoMovement isPlus={isPlus}>{parseFloat(movement).toFixed(2)}</InfoMovement>
                         </Info>
                     );
                 })}
             </Container>
             <Saldo> 
                 <TextSaldo>SALDO</TextSaldo>
-                <ContSaldo isPositive={ saldo > 0 ? true : false }>{parseInt(saldo).toFixed(2)}</ContSaldo>
+                <ContSaldo isPositive={ saldo > 0 ? true : false }>{parseFloat(saldo).toFixed(2)}</ContSaldo>
             </Saldo>
         </>
     ); 
@@ -46,8 +46,9 @@ const Container = styled.div`
     padding-top: 23px;
     padding-left: 15px;
     padding-right: 15px;
-    padding-bottom: 10px;
+    height: 400px;
     font-size: 16px;
+    overflow-y: scroll;
 `
 
 const Info = styled.div`
