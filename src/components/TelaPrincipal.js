@@ -20,8 +20,6 @@ function TelaPrincipal() {
         headers: { Authorization: `Bearer ${user.token}` }
     }
 
-    console.log(user.token);
-
     useEffect(() => {
         const promise = axios.get('http://localhost:5000/movements', config);
         promise.then((resposta) => {
@@ -29,6 +27,7 @@ function TelaPrincipal() {
             const { name, movements } = data;
             setUser({...user, name});
             setMovements(movements);
+            console.log(movements);
         });
         promise.catch((e) => {
             console.log('Não foi possível pegar as transacoes');

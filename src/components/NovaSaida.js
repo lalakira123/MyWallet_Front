@@ -6,7 +6,7 @@ import axios from 'axios';
 import UserContext from './../contexts/UserContext';
 
 function NovaSaida() {
-    const [novaSaida, setNovaSaida] = useState({movimento:"", descricao:""})
+    const [novaSaida, setNovaSaida] = useState({movement:"", description:""})
 
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
@@ -17,7 +17,7 @@ function NovaSaida() {
 
     function adicionarNovaSaida(e) {
         e.preventDefault();
-        const promise = axios.post('https://localhost:5000/movements',{
+        const promise = axios.post('http://localhost:5000/movements',{
             ...novaSaida,
             isPlus: false
         }, config);
@@ -38,15 +38,15 @@ function NovaSaida() {
             <Form onSubmit={adicionarNovaSaida}>
                 <Input 
                     placeholder="Valor"
-                    onChange={(e) => setNovaSaida({...novaSaida, movimento: e.target.value})}
-                    value={novaSaida.movimento}
+                    onChange={(e) => setNovaSaida({...novaSaida, movement: e.target.value})}
+                    value={novaSaida.movement}
                     type='number'
                     required 
                 />
                 <Input 
                     placeholder="Descrição"
-                    onChange={(e) => setNovaSaida({...novaSaida, descricao: e.target.value})}
-                    value={novaSaida.descricao}
+                    onChange={(e) => setNovaSaida({...novaSaida, description: e.target.value})}
+                    value={novaSaida.description}
                     type='text'
                     required 
                 />
