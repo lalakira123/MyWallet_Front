@@ -1,7 +1,20 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 function Movimentacoes(props){
     const { movements } = props;
+
+    const [saldo, setSaldo] = useState(0);
+
+    useEffect(() => {
+        let soma = 0;
+        movements.forEach((move) => {
+            const { movement, isPlus } = move;
+            if(isPlus) soma += parseInt(movement);
+            else soma -= parseInt(movement);
+        })
+        setSaldo(soma);
+    }, [])
 
     return (
         <>
@@ -9,7 +22,7 @@ function Movimentacoes(props){
                 {movements.map((move) => {
                     const { date, movement, description, isPlus } = move;
                     return(
-                        <Info>
+                        <Info key={description}>
                             <InfoDescription>
                                 <Data>{date}</Data>
                                 <Descricao>{description}</Descricao>
@@ -21,7 +34,7 @@ function Movimentacoes(props){
             </Container>
             <Saldo> 
                 <TextSaldo>SALDO</TextSaldo>
-                <p>2849,96</p>
+                <ContSaldo>{saldo}</ContSaldo>
             </Saldo>
         </>
     ); 
