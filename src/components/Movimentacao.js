@@ -1,13 +1,18 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
 import UserContext from './../contexts/UserContext';
+import MovementContext from './../contexts/MovementContext';
 
 function Movimentacao(props) {
     const { date, movement, description, isPlus, id, setStatus, status } = props;
 
+    const navigate = useNavigate();
+
     const { user } = useContext(UserContext);
+    const { setMovement } = useContext(MovementContext);
     const config = {
         headers: { Authorization: `Bearer ${user.token}`}
     }
@@ -20,16 +25,21 @@ function Movimentacao(props) {
                 setStatus(status + 1);
             });
             promise.catch((e) => {
-                console.log(e.data);
+                console.log(e.message);
             })
         }
+    }
+
+    function editarMovimentacao(){
+        setMovement({isPlus, id});
+        navigate('/edicao');
     }
 
     return(
         <Info key={description}>
             <InfoDescription>
                 <Data>{date}</Data>
-                <Descricao>{description}</Descricao>
+                <Descricao onClick={editarMovimentacao}>{description}</Descricao>
             </InfoDescription>
             <InfoDescription>
                 <InfoMovement isPlus={isPlus}>{parseFloat(movement).toFixed(2)}</InfoMovement>

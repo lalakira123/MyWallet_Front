@@ -21,7 +21,7 @@ function Login() {
         });
         promise.catch((e) => {
             console.log('Não foi possível realizar o login');
-            console.log(e);
+            console.log(e.message);
         });
     }
 

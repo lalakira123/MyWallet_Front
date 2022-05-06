@@ -17,7 +17,7 @@ function Cadastro() {
         });
         promise.catch((e) => {
             console.log('Não foi possível cadastrar o usuário');
-            console.log(e.response.data);
+            console.log(e.message);
         });
     }
 

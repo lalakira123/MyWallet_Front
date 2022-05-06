@@ -33,7 +33,7 @@ function TelaPrincipal() {
         });
         promise.catch((e) => {
             console.log('Não foi possível pegar as transacoes');
-            console.log(e);
+            console.log(e.message);
         }); 
     },[status]);
 
