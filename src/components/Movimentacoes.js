@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+import Movimentacao from './Movimentacao';
+
 function Movimentacoes(props){
-    const { movements } = props;
+    const { movements, status, setStatus } = props;
 
     const [saldo, setSaldo] = useState(0);
 
@@ -14,21 +16,24 @@ function Movimentacoes(props){
             else soma -= parseFloat(movement);
         })
         setSaldo(soma);
-    }, [])
+    }, [movements]);
 
     return (
         <>
             <Container>
                 {movements.map((move) => {
-                    const { date, movement, description, isPlus } = move;
+                    const { date, movement, description, isPlus, _id } = move;
                     return(
-                        <Info key={description}>
-                            <InfoDescription>
-                                <Data>{date}</Data>
-                                <Descricao>{description}</Descricao>
-                            </InfoDescription>
-                            <InfoMovement isPlus={isPlus}>{parseFloat(movement).toFixed(2)}</InfoMovement>
-                        </Info>
+                        <Movimentacao 
+                            key={_id}
+                            date={date} 
+                            movement={movement} 
+                            description={description}
+                            isPlus={isPlus}
+                            id={_id}
+                            setStatus={setStatus}
+                            status={status}
+                            />
                     );
                 })}
             </Container>
@@ -49,32 +54,6 @@ const Container = styled.div`
     height: 400px;
     font-size: 16px;
     overflow-y: scroll;
-`
-
-const Info = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-`
-
-const InfoDescription = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`
-
-const InfoMovement = styled.p`
-    color: ${props => props.isPlus ? '#03AC00' : '#C70000'};
-`
-
-const Data = styled.p`
-    color: #C6C6C6;
-    margin-right: 5px;
-`
-
-const Descricao = styled.p`
-    color: #000000;
 `
 
 const Saldo = styled.section`

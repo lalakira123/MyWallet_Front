@@ -13,6 +13,7 @@ import UserContext from './../contexts/UserContext';
 
 function TelaPrincipal() {
     const [ movements, setMovements ] = useState([]);
+    const [ status, setStatus ] = useState(0);
 
     const { user, setUser } = useContext(UserContext);
 
@@ -34,7 +35,7 @@ function TelaPrincipal() {
             console.log('Não foi possível pegar as transacoes');
             console.log(e);
         }); 
-    },[]);
+    },[status]);
 
     return(
         <Container>
@@ -47,7 +48,7 @@ function TelaPrincipal() {
             <Main>
                 {
                     movements.length !== 0 ? 
-                    <Movimentacoes movements={movements}/>
+                    <Movimentacoes movements={movements} status={status} setStatus={setStatus}/>
                     : <Mensagem>Não há registros de entrada ou saída</Mensagem>
                 }
             </Main>
