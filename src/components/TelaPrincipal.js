@@ -37,13 +37,16 @@ function TelaPrincipal() {
         }); 
     },[status]);
 
+    function deslogar() {
+        setUser({user:"", token:""});
+        navigate('/');
+    }
+
     return(
         <Container>
             <Header>
                 <h2>Olá, {user.name}</h2>
-                <Link to='/'>
-                    <img src={Saida} alt='sair'/>
-                </Link>
+                <img src={Saida} alt='sair' onClick={deslogar}/>
             </Header>
             <Main>
                 {
