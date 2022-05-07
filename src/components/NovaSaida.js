@@ -60,6 +60,9 @@ export default NovaSaida;
 
 const Container = styled.div`
     padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 
 const Header = styled.header`
@@ -67,6 +70,7 @@ const Header = styled.header`
     font-weight: 700;
     color: #FFFFFF;
     margin-bottom: 40px;
+    padding-right: 182px;
 `
 
 const Form = styled.form`

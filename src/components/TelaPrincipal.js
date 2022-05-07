@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -24,6 +24,10 @@ function TelaPrincipal() {
     }
 
     useEffect(() => {
+        if(!user.token){
+            navigate('/');
+        }
+
         const promise = axios.get('http://localhost:5000/movements', config);
         promise.then((resposta) => {
             const { data } = resposta;
@@ -38,7 +42,7 @@ function TelaPrincipal() {
     },[status]);
 
     function deslogar() {
-        setUser({user:"", token:""});
+        setUser({name:"", token:""});
         navigate('/');
     }
 
@@ -112,7 +116,7 @@ const Section = styled.section`
 
 const Botao = styled.div`
     background-color: #A328D6;
-    width: 155px;
+    width: 49%;
     height: 110px;
     border-radius: 5px;
     padding: 10px;
