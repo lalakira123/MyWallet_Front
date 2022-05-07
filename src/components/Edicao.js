@@ -19,7 +19,7 @@ function Edicao() {
 
     function atualizarMovimentacao(e) {
         e.preventDefault();
-        const promise = axios.put(`http://localhost:5000/movements/${movement.id}`, atualiza, config);
+        const promise = axios.put(`https://back-projeto-mywallet.herokuapp.com/movements/${movement.id}`, atualiza, config);
         promise.then(() => {
             navigate('/transacoes');
         });

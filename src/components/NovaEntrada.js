@@ -17,7 +17,7 @@ function NovaEntrada() {
 
     function adicionarNovaEntrada(e) {
         e.preventDefault();
-        const promise = axios.post('http://localhost:5000/movements',{
+        const promise = axios.post('https://back-projeto-mywallet.herokuapp.com/movements',{
             ...novaEntrada,
             isPlus: true    
         }, config);

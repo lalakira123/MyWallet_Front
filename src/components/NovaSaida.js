@@ -17,7 +17,7 @@ function NovaSaida() {
 
     function adicionarNovaSaida(e) {
         e.preventDefault();
-        const promise = axios.post('http://localhost:5000/movements',{
+        const promise = axios.post('https://back-projeto-mywallet.herokuapp.com/movements',{
             ...novaSaida,
             isPlus: false
         }, config);

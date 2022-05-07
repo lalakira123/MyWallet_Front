@@ -10,7 +10,7 @@ function Cadastro() {
 
     function cadastrar(e){
         e.preventDefault();
-        const promise = axios.post('http://localhost:5000/sign-up', cadastro);
+        const promise = axios.post('https://back-projeto-mywallet.herokuapp.com/sign-up', cadastro);
         promise.then((response) => {
             console.log(response.data.status);
             navigate('/');

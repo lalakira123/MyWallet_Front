@@ -19,7 +19,7 @@ function Movimentacao(props) {
 
     function deletarMovimentacao(){
         if(window.confirm('Deseja realmente deletar essa movimentação?')){
-            const promise = axios.delete(`http://localhost:5000/movements/${id}`, config);
+            const promise = axios.delete(`https://back-projeto-mywallet.herokuapp.com/movements/${id}`, config);
             promise.then(() => {
                 console.log('Sucesso!');
                 setStatus(status + 1);

@@ -28,7 +28,7 @@ function TelaPrincipal() {
             navigate('/');
         }
 
-        const promise = axios.get('http://localhost:5000/movements', config);
+        const promise = axios.get('https://back-projeto-mywallet.herokuapp.com/movements', config);
         promise.then((resposta) => {
             const { data } = resposta;
             const { name, movements } = data;

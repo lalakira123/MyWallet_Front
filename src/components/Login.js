@@ -13,7 +13,7 @@ function Login() {
 
     function logar(e){
         e.preventDefault();
-        const promise = axios.post('http://localhost:5000/sign-in', login);
+        const promise = axios.post('https://back-projeto-mywallet.herokuapp.com/sign-in', login);
         promise.then((resposta) => {
             const { data } = resposta;
             setUser({...user, token: data});  
