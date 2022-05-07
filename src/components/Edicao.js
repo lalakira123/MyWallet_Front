@@ -69,7 +69,7 @@ const Header = styled.header`
     font-weight: 700;
     color: #FFFFFF;
     margin-bottom: 40px;
-    padding-right: 142px;
+    padding-right: 132px;
 `
 
 const Form = styled.form`
