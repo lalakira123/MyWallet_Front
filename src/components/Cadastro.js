@@ -5,19 +5,23 @@ import axios from 'axios';
 
 function Cadastro() {
     const [cadastro, setCadastro] = useState({name:"", email:"", password:"", passwordConfirmation:""});
+    const [carregando, setCarregando] = useState(false);
 
     const navigate = useNavigate();
 
     function cadastrar(e){
         e.preventDefault();
+        setCarregando(true);
         const promise = axios.post('https://back-projeto-mywallet.herokuapp.com/sign-up', cadastro);
         promise.then((response) => {
             console.log(response.data.status);
             navigate('/');
+            setCarregando(false);
         });
         promise.catch((e) => {
             console.log('Não foi possível cadastrar o usuário');
             console.log(e.message);
+            setCarregando(false);
         });
     }
 
@@ -31,6 +35,7 @@ function Cadastro() {
                     value={cadastro.name}
                     type='text'
                     required 
+                    disabled={carregando}
                 />
                 <Input 
                     placeholder="E-mail"
@@ -38,6 +43,7 @@ function Cadastro() {
                     value={cadastro.email}
                     type='email'
                     required 
+                    disabled={carregando}
                 />
                 <Input 
                     placeholder="Senha"
@@ -45,6 +51,7 @@ function Cadastro() {
                     value={cadastro.password}
                     type='password'
                     required 
+                    disabled={carregando}
                 />
                 <Input 
                     placeholder="Confirme a senha"
@@ -52,8 +59,9 @@ function Cadastro() {
                     value={cadastro.passwordConfirmation}
                     type='password'
                     required
+                    disabled={carregando}
                 />
-                <Button> Cadastrar </Button>
+                <Button disabled={carregando}> Cadastrar </Button>
             </Form>
             <Link to='/'>Já tem uma conta? Entre agora!</Link>
         </Container>

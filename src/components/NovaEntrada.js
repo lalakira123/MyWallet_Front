@@ -7,6 +7,7 @@ import UserContext from './../contexts/UserContext';
 
 function NovaEntrada() {
     const [novaEntrada, setNovaEntrada] = useState({movement:"", description:""});
+    const [carregando, setCarregando] = useState(false);
 
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
@@ -17,16 +18,19 @@ function NovaEntrada() {
 
     function adicionarNovaEntrada(e) {
         e.preventDefault();
+        setCarregando(true);
         const promise = axios.post('https://back-projeto-mywallet.herokuapp.com/movements',{
             ...novaEntrada,
             isPlus: true    
         }, config);
         promise.then(() => {
             navigate('/transacoes');
+            setCarregando(false);
         });
         promise.catch((e) => {
             console.log('Não foi possível enviar os dados');
             console.log(e);
+            setCarregando(false);
         });
     }
 
@@ -42,6 +46,7 @@ function NovaEntrada() {
                     value={novaEntrada.movement} 
                     type='number'
                     required
+                    disabled={carregando}
                 />
                 <Input 
                     placeholder="Descrição"
@@ -49,8 +54,9 @@ function NovaEntrada() {
                     value={novaEntrada.description}
                     type='text'
                     required 
+                    disabled={carregando}
                 />
-                <Button> Salvar entrada </Button>
+                <Button disabled={carregando}> Salvar entrada </Button>
             </Form>
         </Container>
     );

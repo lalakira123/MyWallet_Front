@@ -7,21 +7,25 @@ import UserContext from './../contexts/UserContext';
  
 function Login() {
     const [login, setLogin] = useState({email:"", password:""});
+    const [carregando, setCarregando] = useState(false);
 
     const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext);
 
     function logar(e){
         e.preventDefault();
+        setCarregando(true);
         const promise = axios.post('https://back-projeto-mywallet.herokuapp.com/sign-in', login);
         promise.then((resposta) => {
             const { data } = resposta;
             setUser({...user, token: data});  
             navigate('/transacoes');   
+            setCarregando(false);
         });
         promise.catch((e) => {
             console.log('Não foi possível realizar o login');
             console.log(e.message);
+            setCarregando(false);
         });
     }
 
@@ -35,6 +39,7 @@ function Login() {
                     value={login.email}
                     type='text'
                     required
+                    disabled={carregando}
                 />
                 <Input 
                     placeholder="Senha"
@@ -42,8 +47,9 @@ function Login() {
                     value={login.password}
                     type='password'
                     required 
+                    disabled={carregando}
                 />
-                <Button> Entrar </Button>
+                <Button disabled={carregando}> Entrar </Button>
             </Form>
             <Link to='/cadastro'>Primeira vez? Cadastra-se!</Link>
         </Container>

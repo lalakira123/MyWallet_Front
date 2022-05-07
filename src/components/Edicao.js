@@ -8,6 +8,7 @@ import MovementContext from './../contexts/MovementContext';
 
 function Edicao() {
     const [atualiza, setAtualiza] = useState({movement:"", description:""});
+    const [carregando, setCarregando] = useState(false);
 
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
@@ -19,13 +20,16 @@ function Edicao() {
 
     function atualizarMovimentacao(e) {
         e.preventDefault();
+        setCarregando(true);
         const promise = axios.put(`https://back-projeto-mywallet.herokuapp.com/movements/${movement.id}`, atualiza, config);
         promise.then(() => {
             navigate('/transacoes');
+            setCarregando(false);
         });
         promise.catch((e) => {
             console.log('Não foi possível enviar os dados');
             console.log(e);
+            setCarregando(false);
         });
     }
 
@@ -41,6 +45,7 @@ function Edicao() {
                     value={atualiza.movement} 
                     type='number'
                     required
+                    disabled={carregando}
                 />
                 <Input 
                     placeholder="Descrição"
@@ -48,8 +53,9 @@ function Edicao() {
                     value={atualiza.description}
                     type='text'
                     required 
+                    disabled={carregando}
                 />
-                {movement.isPlus ? <Button> Atualizar entrada </Button> : <Button> Atualizar saída </Button>}
+                {movement.isPlus ? <Button disabled={carregando}> Atualizar entrada </Button> : <Button> Atualizar saída </Button>}
             </Form>
         </Container>
     );

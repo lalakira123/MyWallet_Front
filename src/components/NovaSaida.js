@@ -7,6 +7,7 @@ import UserContext from './../contexts/UserContext';
 
 function NovaSaida() {
     const [novaSaida, setNovaSaida] = useState({movement:"", description:""})
+    const [carregando, setCarregando] = useState(false);
 
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
@@ -17,16 +18,19 @@ function NovaSaida() {
 
     function adicionarNovaSaida(e) {
         e.preventDefault();
+        setCarregando(true);
         const promise = axios.post('https://back-projeto-mywallet.herokuapp.com/movements',{
             ...novaSaida,
             isPlus: false
         }, config);
         promise.then(() => {
             navigate('/transacoes');
+            setCarregando(false);
         })
         promise.catch((e) => {
             console.log('Não foi possível adicionar transacao');
             console.log(e);
+            setCarregando(false);
         })
     }
 
@@ -42,6 +46,7 @@ function NovaSaida() {
                     value={novaSaida.movement}
                     type='number'
                     required 
+                    disabled={carregando}
                 />
                 <Input 
                     placeholder="Descrição"
@@ -49,8 +54,9 @@ function NovaSaida() {
                     value={novaSaida.description}
                     type='text'
                     required 
+                    disabled={carregando}
                 />
-                <Button> Salvar saída </Button>
+                <Button disabled={carregando}> Salvar saída </Button>
             </Form>
         </Container>
     );
